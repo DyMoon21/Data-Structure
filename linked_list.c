@@ -307,6 +307,46 @@ int delMiddleNode(Node *head)
     return 1;
 }
 
+//链表重新排序
+void reOrderList(Node *head)
+{
+    Node *fast = head->next;
+    Node *slow = head;
+    while(fast != NULL && fast->next != NULL)
+    {
+        fast = fast->next->next;
+        slow = slow->next;
+    }
+
+    Node *first = NULL;
+    Node *second = slow->next;
+    slow->next = NULL;
+    Node *third = NULL;
+
+    while(second != NULL)
+    {
+        third = second->next;
+        second->next = first;
+        first = second;
+        second = third;
+    }
+
+    Node *p1 = head->next;
+    Node *q1 = first;
+    Node *p2, *q2;
+    while(p1 != NULL && q1 != NULL)
+    {
+        p2 = p1->next;
+        q2 = q1->next;
+
+        p1->next = q1;
+        q1->next = p2;
+
+        p1 = p2;
+        q1 = q2;
+    }
+}
+
 int main()
 {
     Node *list = initList();
@@ -319,9 +359,8 @@ int main()
     tail = insertTail(tail, 4);
     tail = insertTail(tail, 5);
     tail = insertTail(tail, 6);
-    tail = insertTail(tail, 7);
     listNode(list);
-    delMiddleNode(list);
+    reOrderList(list);
     listNode(list);
     return 0;
 }
