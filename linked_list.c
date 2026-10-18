@@ -290,6 +290,23 @@ Node* reverseList(Node* head)
     return hd;
 }
 
+//删除中间节点
+int delMiddleNode(Node *head)
+{
+    Node *fast = head->next;
+    Node *slow = head;
+
+    while(fast != NULL && fast->next != NULL)
+    {
+        fast = fast->next->next;
+        slow = slow->next;
+    }
+    Node *q = slow->next;
+    slow->next = q->next;
+    free(q);
+    return 1;
+}
+
 int main()
 {
     Node *list = initList();
@@ -302,8 +319,9 @@ int main()
     tail = insertTail(tail, 4);
     tail = insertTail(tail, 5);
     tail = insertTail(tail, 6);
+    tail = insertTail(tail, 7);
     listNode(list);
-    Node* reverse = reverseList(list);
-    listNode(reverse);
+    delMiddleNode(list);
+    listNode(list);
     return 0;
 }
