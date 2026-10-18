@@ -347,6 +347,25 @@ void reOrderList(Node *head)
     }
 }
 
+//判断链表是否有环
+int isCycle(Node *head)
+{
+    Node *fast = head;
+    Node *slow = head;
+
+    while(fast != NULL && fast->next != NULL)
+    {
+        fast = fast->next->next;
+        slow = slow->next;
+        if(fast == slow)
+        {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
 int main()
 {
     Node *list = initList();
@@ -356,11 +375,22 @@ int main()
     tail = insertTail(tail, 1);
     tail = insertTail(tail, 2);
     tail = insertTail(tail, 3);
+    Node *three = tail;
     tail = insertTail(tail, 4);
     tail = insertTail(tail, 5);
     tail = insertTail(tail, 6);
-    listNode(list);
-    reOrderList(list);
-    listNode(list);
+    tail = insertTail(tail, 7);
+    tail = insertTail(tail, 8);
+    tail->next = three;
+
+    if (isCycle(list))
+    {
+        printf("有环\n");
+    }
+    else
+    {
+        printf("无环\n");
+    }
+    
     return 0;
 }
