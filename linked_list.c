@@ -270,20 +270,40 @@ void removeNode(Node *L, int n)
     free(q);
 }
 
+//反转链表
+Node* reverseList(Node* head)
+{
+    Node *first = NULL;
+    Node *second = head->next;
+    Node *third;
+
+    while(second != NULL)
+    {
+        third = second->next;
+        second->next = first;
+        first = second;
+        second = third;
+    }
+    Node *hd = initList();
+    hd->next = first;
+
+    return hd;
+}
+
 int main()
 {
     Node *list = initList();
 
     Node *tail = get_tail(list);
 
-    tail = insertTail(tail, 21);
-    tail = insertTail(tail, -15);
-    tail = insertTail(tail, -15);
-    tail = insertTail(tail, 7);
-    tail = insertTail(tail, 15);
+    tail = insertTail(tail, 1);
+    tail = insertTail(tail, 2);
+    tail = insertTail(tail, 3);
+    tail = insertTail(tail, 4);
+    tail = insertTail(tail, 5);
+    tail = insertTail(tail, 6);
     listNode(list);
-    removeNode(list,21);
-
-    listNode(list);
+    Node* reverse = reverseList(list);
+    listNode(reverse);
     return 0;
 }
