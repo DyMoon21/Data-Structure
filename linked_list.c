@@ -42,7 +42,7 @@ void listNode(Node* L)
     Node *p = L->next;
     while (p != NULL)
     {
-        printf("%c ", p->data);
+        printf("%d ", p->data);
         p = p->next;
     }
     printf("\n");
@@ -238,32 +238,52 @@ Node* findIntersectionNode(Node *headA,Node *headB)
     return m;
 }
 
+//删除绝对值相同的节点
+void removeNode(Node *L, int n)
+{
+    Node *p = L;
+    int index;//作为数组下标使用
+    int *q = (int*)malloc(sizeof(int)*(n+1));
+
+    //遍历数组，初始化为0
+    for(int i = 0; i < n+1; i++)
+    {
+        *(q + i) = 0;
+    }
+
+    while(p->next != NULL)
+    {
+        //abs获取绝对值
+        index = abs(p->next->data);
+        if(*(q+index) == 0)
+        {
+            *(q + index) = 1;
+            p = p->next;
+        }
+        else
+        {
+            Node *temp = p->next;
+            p->next = temp->next;
+            free(temp);
+        }
+    }
+    free(q);
+}
+
 int main()
 {
-    Node *listA = initList();
-    Node *listB = initList();
-    Node *tailA = get_tail(listA);
-    Node *tailB = get_tail(listB);
-    tailA = insertTail(tailA, 'l');
-    tailA = insertTail(tailA, 'o');
-    tailA = insertTail(tailA, 'a');
-    tailA = insertTail(tailA, 'd');
-    tailB = insertTail(tailB, 'b');
-    tailB = insertTail(tailB, 'e');
+    Node *list = initList();
 
-    Node *nodeI = initListWithElem('i');
-    tailA = insertTailWithNode(tailA, nodeI);
-    tailB = insertTailWithNode(tailB, nodeI);
-    Node *nodeN = initListWithElem('n');
-    tailA = insertTailWithNode(tailA, nodeN);
-    tailB = insertTailWithNode(tailB, nodeN);
-    Node *nodeG = initListWithElem('g');
-    tailA = insertTailWithNode(tailA, nodeG);
-    tailB = insertTailWithNode(tailB, nodeG);
+    Node *tail = get_tail(list);
 
-    listNode(listA);
-    listNode(listB);
+    tail = insertTail(tail, 21);
+    tail = insertTail(tail, -15);
+    tail = insertTail(tail, -15);
+    tail = insertTail(tail, 7);
+    tail = insertTail(tail, 15);
+    listNode(list);
+    removeNode(list,21);
 
-    printf("%c\n", findIntersectionNode(listA,listB)->data);
+    listNode(list);
     return 0;
 }
