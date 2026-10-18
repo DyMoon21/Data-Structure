@@ -366,6 +366,44 @@ int isCycle(Node *head)
     return 0;
 }
 
+//找到链表环的入口
+Node* findBegin(Node *head)
+{
+    Node *fast = head;
+    Node *slow = head;
+
+    while(fast != NULL && fast->next != NULL)
+    {
+        fast = fast->next->next;
+        slow = slow->next;
+        if(fast == slow)
+        {
+            int count = 1;
+            while(fast->next != slow)
+            {
+                count++;
+                fast = fast->next;
+            }
+
+            fast = head;
+            slow = head;
+
+            for (int i = 0; i < count; i++)
+            {
+                fast = fast->next;
+            }
+
+            while(fast != slow)
+            {
+                fast = fast->next;
+                slow = slow->next;
+            }
+            return slow;
+        }
+    }
+    return NULL;
+}
+
 int main()
 {
     Node *list = initList();
@@ -382,15 +420,7 @@ int main()
     tail = insertTail(tail, 7);
     tail = insertTail(tail, 8);
     tail->next = three;
-
-    if (isCycle(list))
-    {
-        printf("有环\n");
-    }
-    else
-    {
-        printf("无环\n");
-    }
-    
+    Node *p = findBegin(list);
+    printf("%d\n", p->data);
     return 0;
 }
