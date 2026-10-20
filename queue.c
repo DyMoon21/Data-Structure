@@ -4,6 +4,22 @@
 #define MAXSIZE 100
 typedef int ElemType;
 
+/*
+typedef struct
+{
+    ElemType data[MAXSIZE];
+    int front;
+    int rear;
+}Queue;
+
+void initQueue(Queue *Q)
+{
+    Q->front = 0;
+    Q->rear = 0;
+}
+
+
+*/
 typedef struct
 {
     ElemType *data;
